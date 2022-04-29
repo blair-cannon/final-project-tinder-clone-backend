@@ -4,7 +4,7 @@ from django.conf import settings
 from django.dispatch import receiver
 
 
-# Referecned model classes:
+# # Referecned model classes:
 
 class Location(models.Model):
     city = models.CharField(max_length=150)
@@ -59,7 +59,7 @@ class Size(models.Model):
     def __str__(self):
         return self.label
 
-# Models with foriegn keys
+# # Models with foriegn keys
 
 class User(AbstractUser):
     second_parent = models.CharField(max_length=300, blank=True, null=True)

@@ -1,6 +1,7 @@
 from .models import Location, Park, Breed, Gender, Socialization, Aggression, Tag, Size, User, Dog, Image, Connection, Conversation, Message, Comment
 from rest_framework import serializers
 
+
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location

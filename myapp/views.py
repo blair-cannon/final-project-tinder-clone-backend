@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action
 
 
+
 class LocationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Locations to be viewed or edited.
@@ -66,7 +67,7 @@ class SizeViewSet(viewsets.ModelViewSet):
     serializer_class = SizeSerializer
 
 
-# viewsets with filtered views:
+# # viewsets with filtered views:
 
 class UserViewSet(viewsets.ModelViewSet):
     """
