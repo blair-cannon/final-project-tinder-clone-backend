@@ -72,7 +72,7 @@ class User(AbstractUser):
 @receiver(models.signals.post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        g = Group.objects.get(name='Dog Owners') 
+        g, created = Group.objects.get_or_create(name='Dog Owners') 
         g.user_set.add(instance)
 
 class Dog(models.Model):
