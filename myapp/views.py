@@ -127,7 +127,6 @@ class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['dog_creator__name', 'dog_other__name']
-    authentication_classes = ()
     """
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
