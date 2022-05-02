@@ -90,7 +90,7 @@ class DogViewSet(viewsets.ModelViewSet):
     queryset = Dog.objects.all()
     serializer_class = DogSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['name', 'breed__name', 'size__label', 'gender__label' ]
+    filterset_fields = ['name', 'breed__name', 'size__label', 'gender__label', 'user' ]
     """
     ^ Allows a Dog view searching by dog name, breed name, size, and gender
     """

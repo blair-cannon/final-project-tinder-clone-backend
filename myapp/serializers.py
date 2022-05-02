@@ -43,15 +43,15 @@ class SizeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True
-    )
-    username = serializers.CharField()
-    password = serializers.CharField(min_length=8, write_only=True)
+    # email = serializers.EmailField(
+    #     required=True
+    # )
+    # username = serializers.CharField()
+    # password = serializers.CharField(min_length=8, write_only=True)
     
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'first_name', 'second_parent', 'phone_number', 'location') 
+        fields = ('email', 'id', 'username', 'password', 'first_name', 'second_parent', 'phone_number', 'location') 
         """ 
         only pull in the PROVIDED DJANGO USER FIELDS that are going to be used in creating a user, 
         and then add your extended fields,
@@ -68,10 +68,7 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 class DogSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="first_name"
-  )
+    user = UserSerializer(read_only=True)
     breed = serializers.SlugRelatedField( 
     read_only=True,
     slug_field="name"
@@ -136,14 +133,8 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     sent_at = serializers.SerializerMethodField()
-    dog_sent = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="name"
-  )
-    dog_received = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="name"
-  )
+    dog_sent = DogSerializer(read_only=True)
+    dog_received = DogSerializer(read_only=True)
     conversation = serializers.SlugRelatedField( 
     read_only=True,
     slug_field="subject"
