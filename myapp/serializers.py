@@ -124,7 +124,7 @@ class ConversationSerializer(serializers.ModelSerializer):
   )
 
     def get_created_at(self, obj):
-        return obj.created_at.strftime("%H:%M %m-%d")
+        return obj.created_at.strftime("%m/%d")
 
     class Meta:
         model = Conversation
