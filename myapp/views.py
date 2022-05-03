@@ -126,7 +126,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog_creator__name', 'dog_other__name']
+    filterset_fields = ['dog_creator__name', 'dog_other__name', 'dog_creator__user_id', 'dog_other__user_id']
     """
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
