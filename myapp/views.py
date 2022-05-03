@@ -114,7 +114,7 @@ class ConnectionViewSet(viewsets.ModelViewSet):
     queryset = Connection.objects.all()
     serializer_class = ConnectionSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog_initializer__name', 'dog_target__name']
+    filterset_fields = ['dog_initializer__name', 'dog_target__name', 'dog_initializer__user_id', 'dog_target__user_id']
     """
     ^ Allows a Connection view searching by eithr dog name bc of the foreign key relation with the dog class
     """

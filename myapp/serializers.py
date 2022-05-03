@@ -108,6 +108,8 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ConnectionSerializer(serializers.ModelSerializer):
+    dog_target = DogSerializer(read_only=True)
+    dog_initializer = DogSerializer(read_only=True)
     class Meta:
         model = Connection
         fields = '__all__'
