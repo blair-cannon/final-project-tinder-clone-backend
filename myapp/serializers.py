@@ -1,5 +1,6 @@
 from .models import Location, Park, Breed, Gender, Socialization, Aggression, Tag, Size, User, Dog, Image, Connection, Conversation, Message, Comment
 from rest_framework import serializers
+from rest_framework.response import Response
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -116,9 +117,8 @@ class ConnectionSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
-    dog_creator = DogSerializer(read_only=True)
-    dog_other = DogSerializer(read_only=True)
-
+    dog_creator = DogSerializer()
+    dog_other = DogSerializer()
     def get_created_at(self, obj):
         return obj.created_at.strftime("%m/%d")
 

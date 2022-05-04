@@ -95,6 +95,33 @@ class DogViewSet(viewsets.ModelViewSet):
     ^ Allows a Dog view searching by dog name, breed name, size, and gender
     """
 
+    def create(self, request):
+        ag_id = request.data.pop('aggression')
+        aggression = Aggression.objects.get(pk=ag_id)
+        br_id = request.data.pop('breed') 
+        breed = Breed.objects.get(pk=br_id)
+        fp_id = request.data.pop('favorite_park')
+        favorite_park = Park.objects.get(pk=fp_id)
+        ge_id = request.data.pop('gender') 
+        gender = Gender.objects.get(pk=ge_id)
+        si_id = request.data.pop('size')
+        size = Size.objects.get(pk=si_id)
+        so_id = request.data.pop('socialization') 
+        socialization = Socialization.objects.get(pk=so_id)
+
+        if aggression and breed and favorite_park and gender and size and socialization:
+            d = Dog.objects.create(
+                aggression=aggression,
+                breed=breed,
+                favorite_park=favorite_park,
+                gender=gender,
+                size=size,
+                socialization=socialization,
+                 **request.data)
+            return Response(data=d.id)
+
+        return Response(data="failed")
+
 class ImageViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -130,6 +157,19 @@ class ConversationViewSet(viewsets.ModelViewSet):
     """
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
+
+    def create(self, request):
+        request.data._mutable = True
+        dc_id = request.data.pop('dog_creator')
+        dog_creator = Dog.objects.get(pk=dc_id)
+        do_id = request.data.pop('dog_other') 
+        dog_other = Dog.objects.get(pk=do_id)
+
+        if dog_creator and dog_other:
+            c = Conversation.objects.create(dog_creator=dog_creator, dog_other=dog_other, **request.data)
+            return Response(data=c.id)
+
+        return Response(data="failed")
 
 class MessageViewSet(viewsets.ModelViewSet):
     """
