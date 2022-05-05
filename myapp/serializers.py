@@ -97,8 +97,8 @@ class ConnectionSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
-    # dog_creator = DogSerializer(queryset=User.objects.all())
-    # dog_other = DogSerializer(queryset=User.objects.all())
+    dog_creator = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
+    dog_other = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
     def get_created_at(self, obj):
         return obj.created_at.strftime("%m/%d")
 
