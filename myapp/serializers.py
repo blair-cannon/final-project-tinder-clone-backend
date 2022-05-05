@@ -1,6 +1,7 @@
 from .models import Location, Park, Breed, Gender, Socialization, Aggression, Tag, Size, User, Dog, Image, Connection, Conversation, Message, Comment
 from rest_framework import serializers
 from rest_framework.response import Response
+from .fields import CustomForeignKeyField, TagListingField
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -69,36 +70,15 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 class DogSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    breed = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="name"
-  )
-    size = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="label"
-  )
-    gender = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="label"
-  )
-    socialization = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="label"
-  )
-    aggression = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="label"
-  )
-    favorite_park = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="name"
-  )
-    tags = serializers.SlugRelatedField(
-    many=True, 
-    read_only=True,
-    slug_field="label"
-  )
+    user = CustomForeignKeyField(queryset=User.objects.all(), serializer=UserSerializer)
+    breed = CustomForeignKeyField(queryset=Breed.objects.all(), serializer=BreedSerializer)
+    size = CustomForeignKeyField(queryset=Size.objects.all(), serializer=SizeSerializer)
+    gender = CustomForeignKeyField(queryset=Gender.objects.all(), serializer=GenderSerializer)
+    socialization = CustomForeignKeyField(queryset=Socialization.objects.all(), serializer=SocializationSerializer)
+    aggression = CustomForeignKeyField(queryset=Aggression.objects.all(), serializer=AggressionSerializer)
+    favorite_park = CustomForeignKeyField(queryset=Park.objects.all(), serializer=ParkSerializer)
+    tags = TagListingField(queryset=Tag.objects.all(), many=True)
+   
     class Meta:
         model = Dog
         fields = '__all__'
@@ -117,8 +97,8 @@ class ConnectionSerializer(serializers.ModelSerializer):
 
 class ConversationSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
-    dog_creator = DogSerializer()
-    dog_other = DogSerializer()
+    # dog_creator = DogSerializer(queryset=User.objects.all())
+    # dog_other = DogSerializer(queryset=User.objects.all())
     def get_created_at(self, obj):
         return obj.created_at.strftime("%m/%d")
 
