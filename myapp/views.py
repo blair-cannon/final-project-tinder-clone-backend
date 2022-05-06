@@ -95,33 +95,6 @@ class DogViewSet(viewsets.ModelViewSet):
     ^ Allows a Dog view searching by dog name, breed name, size, and gender
     """
 
-    # def create(self, request):
-    #     ag_id = request.data.pop('aggression')
-    #     aggression = Aggression.objects.get(pk=ag_id)
-    #     br_id = request.data.pop('breed') 
-    #     breed = Breed.objects.get(pk=br_id)
-    #     fp_id = request.data.pop('favorite_park')
-    #     favorite_park = Park.objects.get(pk=fp_id)
-    #     ge_id = request.data.pop('gender') 
-    #     gender = Gender.objects.get(pk=ge_id)
-    #     si_id = request.data.pop('size')
-    #     size = Size.objects.get(pk=si_id)
-    #     so_id = request.data.pop('socialization') 
-    #     socialization = Socialization.objects.get(pk=so_id)
-
-    #     if aggression and breed and favorite_park and gender and size and socialization:
-    #         d = Dog.objects.create(
-    #             aggression=aggression,
-    #             breed=breed,
-    #             favorite_park=favorite_park,
-    #             gender=gender,
-    #             size=size,
-    #             socialization=socialization,
-    #              **request.data)
-    #         return Response(data=d.id)
-
-    #     return Response(data="failed")
-
 class ImageViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
