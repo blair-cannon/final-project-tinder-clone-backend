@@ -102,7 +102,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog__name']
+    filterset_fields = ['dog__name', 'dog']
     """
     ^ Allows a Image view searching by dog name 
     """

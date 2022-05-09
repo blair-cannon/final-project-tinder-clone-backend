@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from .fields import CustomForeignKeyField, TagListingField
 
+BASE_API_URL = 'https://8000-blairpresto-finalprojec-khbsmmpuzia.ws-us44.gitpod.io/'
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -84,9 +85,14 @@ class DogSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_image_url')
     class Meta:
         model = Image
         fields = '__all__'
+
+    def get_image_url(self, obj):
+        if obj.image:
+            return BASE_API_URL + obj.image.url
 
 class ConnectionSerializer(serializers.ModelSerializer):
     dog_target = DogSerializer(read_only=True)
