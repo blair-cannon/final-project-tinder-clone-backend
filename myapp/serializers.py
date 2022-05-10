@@ -97,7 +97,6 @@ class DogSerializer(serializers.ModelSerializer):
             'aggression',
             'favorite_park',
             'tags',
-            'image_set'
         )
 
 class ConnectionSerializer(serializers.ModelSerializer):
