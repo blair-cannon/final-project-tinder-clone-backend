@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Tag
 
+BASE_API_URL = 'https://8000-blairpresto-finalprojec-khbsmmpuzia.ws-us44.gitpod.io/'
+
 class CustomForeignKeyField(serializers.PrimaryKeyRelatedField):
     """
     To use (serializer mustn subclass MODELSERIALIZER)
@@ -37,3 +39,8 @@ class TagListingField(serializers.RelatedField):
         raise serializers.ValidationError(
             "No tag exists with id \"%s\"." % str(tag_id),
         )
+
+class URLForImage(serializers.ImageField):
+     def to_representation(self, value):
+         if value:
+            return BASE_API_URL + value.url

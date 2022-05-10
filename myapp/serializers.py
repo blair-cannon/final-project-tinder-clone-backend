@@ -1,9 +1,9 @@
 from .models import Location, Park, Breed, Gender, Socialization, Aggression, Tag, Size, User, Dog, Image, Connection, Conversation, Message, Comment
 from rest_framework import serializers
 from rest_framework.response import Response
-from .fields import CustomForeignKeyField, TagListingField
+from .fields import CustomForeignKeyField, TagListingField, URLForImage
 
-BASE_API_URL = 'https://8000-blairpresto-finalprojec-khbsmmpuzia.ws-us44.gitpod.io/'
+
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -70,6 +70,12 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class ImageSerializer(serializers.ModelSerializer):
+    image = URLForImage()
+    class Meta:
+        model = Image
+        fields = '__all__'
+
 class DogSerializer(serializers.ModelSerializer):
     user = CustomForeignKeyField(queryset=User.objects.all(), serializer=UserSerializer)
     breed = CustomForeignKeyField(queryset=Breed.objects.all(), serializer=BreedSerializer)
@@ -82,17 +88,17 @@ class DogSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Dog
-        fields = '__all__'
-
-class ImageSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_image_url')
-    class Meta:
-        model = Image
-        fields = '__all__'
-
-    def get_image_url(self, obj):
-        if obj.image:
-            return BASE_API_URL + obj.image.url
+        fields = (
+            'user',
+            'breed',
+            'size',
+            'gender',
+            'socialization',
+            'aggression',
+            'favorite_park',
+            'tags',
+            'image_set'
+        )
 
 class ConnectionSerializer(serializers.ModelSerializer):
     dog_target = DogSerializer(read_only=True)
