@@ -88,16 +88,7 @@ class DogSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Dog
-        fields = (
-            'user',
-            'breed',
-            'size',
-            'gender',
-            'socialization',
-            'aggression',
-            'favorite_park',
-            'tags',
-        )
+        fields = '__all__'
 
 class ConnectionSerializer(serializers.ModelSerializer):
     dog_target = DogSerializer(read_only=True)
