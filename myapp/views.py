@@ -131,18 +131,18 @@ class ConversationViewSet(viewsets.ModelViewSet):
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
 
-    def create(self, request):
-        request.data._mutable = True
-        dc_id = request.data.pop('dog_creator')
-        dog_creator = Dog.objects.get(pk=dc_id)
-        do_id = request.data.pop('dog_other') 
-        dog_other = Dog.objects.get(pk=do_id)
+    # def create(self, request):
+    #     request.data._mutable = True
+    #     dc_id = request.data.pop('dog_creator')
+    #     dog_creator = Dog.objects.get(pk=dc_id)
+    #     do_id = request.data.pop('dog_other') 
+    #     dog_other = Dog.objects.get(pk=do_id)
 
-        if dog_creator and dog_other:
-            c = Conversation.objects.create(dog_creator=dog_creator, dog_other=dog_other, **request.data)
-            return Response(data=c.id)
+    #     if dog_creator and dog_other:
+    #         c = Conversation.objects.create(dog_creator=dog_creator, dog_other=dog_other, **request.data)
+    #         return Response(data=c.id)
 
-        return Response(data="failed")
+    #     return Response(data="failed")
 
 class MessageViewSet(viewsets.ModelViewSet):
     """

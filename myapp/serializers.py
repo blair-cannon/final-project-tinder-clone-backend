@@ -105,6 +105,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     dog_creator = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
     dog_other = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
+    
     def get_created_at(self, obj):
         return obj.created_at.strftime("%m/%d")
 
@@ -115,15 +116,13 @@ class ConversationSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     sent_at = serializers.SerializerMethodField()
-    dog_sent = DogSerializer(read_only=True)
-    dog_received = DogSerializer(read_only=True)
-    conversation = serializers.SlugRelatedField( 
-    read_only=True,
-    slug_field="subject"
-  )
+    dog_sent = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
+    dog_received = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
+    conversation = CustomForeignKeyField(queryset=Conversation.objects.all(), serializer=ConversationSerializer)
 
     def get_sent_at(self, obj):
         return obj.sent_at.strftime("%H:%M %m-%d")    
+
     class Meta:
         model = Message
         fields = '__all__'
