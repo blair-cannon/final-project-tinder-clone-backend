@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
     model = User
     list_display = ['username']
 
-# register models to Django admin
+# # register models to Django admin
 admin.site.register(Location)
 admin.site.register(Park)
 admin.site.register(Breed)

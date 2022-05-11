@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action
 
 
+
 class LocationViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Locations to be viewed or edited.
@@ -66,7 +67,7 @@ class SizeViewSet(viewsets.ModelViewSet):
     serializer_class = SizeSerializer
 
 
-# viewsets with filtered views:
+# # viewsets with filtered views:
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -89,7 +90,7 @@ class DogViewSet(viewsets.ModelViewSet):
     queryset = Dog.objects.all()
     serializer_class = DogSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['name', 'breed__name', 'size__label', 'gender__label' ]
+    filterset_fields = ['name', 'breed__name', 'size__label', 'gender__label', 'user_id' ]
     """
     ^ Allows a Dog view searching by dog name, breed name, size, and gender
     """
@@ -101,7 +102,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog__name']
+    filterset_fields = ['dog__name', 'dog']
     """
     ^ Allows a Image view searching by dog name 
     """
@@ -113,7 +114,7 @@ class ConnectionViewSet(viewsets.ModelViewSet):
     queryset = Connection.objects.all()
     serializer_class = ConnectionSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog_initializer__name', 'dog_target__name']
+    filterset_fields = ['dog_initializer__name', 'dog_target__name', 'dog_initializer__user_id', 'dog_target__user_id']
     """
     ^ Allows a Connection view searching by eithr dog name bc of the foreign key relation with the dog class
     """
@@ -125,11 +126,23 @@ class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog_creator__name', 'dog_other__name']
-    authentication_classes = ()
+    filterset_fields = ['dog_creator__name', 'dog_other__name', 'dog_creator__user_id', 'dog_other__user_id']
     """
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
+
+    # def create(self, request):
+    #     request.data._mutable = True
+    #     dc_id = request.data.pop('dog_creator')
+    #     dog_creator = Dog.objects.get(pk=dc_id)
+    #     do_id = request.data.pop('dog_other') 
+    #     dog_other = Dog.objects.get(pk=do_id)
+
+    #     if dog_creator and dog_other:
+    #         c = Conversation.objects.create(dog_creator=dog_creator, dog_other=dog_other, **request.data)
+    #         return Response(data=c.id)
+
+    #     return Response(data="failed")
 
 class MessageViewSet(viewsets.ModelViewSet):
     """
