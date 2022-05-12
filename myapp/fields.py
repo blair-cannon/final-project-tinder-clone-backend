@@ -41,7 +41,6 @@ class TagListingField(serializers.RelatedField):
             print('tag', tag_id)
             print('type', type(tag_id))
             tag = Tag.objects.filter(label=tag_id).first()
-            print(tag)
             if tag:
                 return tag.id
             else:

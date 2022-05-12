@@ -2,7 +2,7 @@ from .models import Location, Park, Breed, Gender, Socialization, Aggression, Ta
 from rest_framework import serializers
 from rest_framework.response import Response
 from .fields import CustomForeignKeyField, TagListingField, URLForImage
-from myproject.settings import REST_FRAMEWORK
+
 
 
 
@@ -85,7 +85,7 @@ class DogSerializer(serializers.ModelSerializer):
     aggression = CustomForeignKeyField(queryset=Aggression.objects.all(), serializer=AggressionSerializer)
     favorite_park = CustomForeignKeyField(queryset=Park.objects.all(), serializer=ParkSerializer)
     tags = TagListingField(queryset=Tag.objects.all(), many=True)
-    # birthday = serializers.DateField(format='YYYY-MM-DD', input_formats='YYYY-MM-DD')
+    # birthday = serializers.DateField(format='YYYY-MM-DD', input_formats='YYYY-MM-DD') %
    
     class Meta:
         model = Dog
@@ -95,9 +95,16 @@ class DogSerializer(serializers.ModelSerializer):
 class ConnectionSerializer(serializers.ModelSerializer):
     dog_target = DogSerializer(read_only=True)
     dog_initializer = DogSerializer(read_only=True)
+    both_id = serializers.SerializerMethodField()
     class Meta:
         model = Connection
         fields = '__all__'
+
+    def get_both_id(self, queryset, name, value):
+        return queryset.filter(
+            Q(dog_target=value) | Q(dog_initializer=value)
+        )
+
 
 class ConversationSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
