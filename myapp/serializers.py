@@ -95,15 +95,15 @@ class DogSerializer(serializers.ModelSerializer):
 class ConnectionSerializer(serializers.ModelSerializer):
     dog_target = DogSerializer(read_only=True)
     dog_initializer = DogSerializer(read_only=True)
-    both_id = serializers.SerializerMethodField()
+    # both_id = serializers.SerializerMethodField()
     class Meta:
         model = Connection
         fields = '__all__'
 
-    def get_both_id(self, queryset, name, value):
-        return queryset.filter(
-            Q(dog_target=value) | Q(dog_initializer=value)
-        )
+    # def get_both_id(self, queryset, name, value):
+    #     return queryset.filter(
+    #         Q(dog_target=value) | Q(dog_initializer=value)
+    #     )
 
 
 class ConversationSerializer(serializers.ModelSerializer):
