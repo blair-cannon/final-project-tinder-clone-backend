@@ -93,8 +93,8 @@ class DogSerializer(serializers.ModelSerializer):
 
 
 class ConnectionSerializer(serializers.ModelSerializer):
-    dog_target = DogSerializer(read_only=True)
-    dog_initializer = DogSerializer(read_only=True)
+    dog_target = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
+    dog_initializer = CustomForeignKeyField(queryset=Dog.objects.all(), serializer=DogSerializer)
     # both_id = serializers.SerializerMethodField()
     class Meta:
         model = Connection

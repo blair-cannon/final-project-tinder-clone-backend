@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Tag
 
-BASE_API_URL = 'https://8000-blairpresto-finalprojec-khbsmmpuzia.ws-us44.gitpod.io/'
+BASE_API_URL = 'https://8000-blairpresto-finalprojec-khbsmmpuzia.ws-us45.gitpod.io/'
 
 class CustomForeignKeyField(serializers.PrimaryKeyRelatedField):
     """
