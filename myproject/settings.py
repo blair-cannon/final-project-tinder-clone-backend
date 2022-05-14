@@ -14,6 +14,14 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # exception if SECRET_KEY not in os.environ
 SECRET_KEY = env('SECRET_KEY')
 
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_URL = os.environ.get('AWS_URL')
+AWS_DEFAULT_ACL = None
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -38,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',
+    'storages',
 ]
 
 
@@ -161,6 +170,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
+STATIC_URL = AWS_URL + '/static/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+MEDIA_URL = AWS_URL + '/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 import django_heroku
 django_heroku.settings(locals())
