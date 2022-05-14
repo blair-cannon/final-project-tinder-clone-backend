@@ -114,10 +114,26 @@ class ConnectionViewSet(viewsets.ModelViewSet):
     queryset = Connection.objects.all()
     serializer_class = ConnectionSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['dog_initializer__name', 'dog_target__name', 'dog_initializer__user_id', 'dog_target__user_id']
+    filterset_fields = ['dog_initializer__name', 'dog_target__name', 'dog_initializer__user_id', 'dog_target__user_id', 'dog_initializer', 'dog_target']
     """
     ^ Allows a Connection view searching by eithr dog name bc of the foreign key relation with the dog class
     """
+
+# class ConnectionSpecificViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows groups to be viewed or edited.
+#     """
+#     queryset = Connection.objects.all()
+#     # serializer_class = ConnectionSerializer
+#     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+#     filterset_fields = [ 'dog_initializer', 'dog_target']
+    
+#     def get_queryset(self):
+#         value = self.kwargs['query']
+#         queryset = Connection.objects.filter(Q(dog_initializer=value) |
+#                                 Q(dog_target=value))
+#         return queryset
+
 
 class ConversationViewSet(viewsets.ModelViewSet):
     """
@@ -131,18 +147,6 @@ class ConversationViewSet(viewsets.ModelViewSet):
     ^ Allows a Conversation view searching by either dog name bc of the foreign key relation with dog class
     """
 
-    # def create(self, request):
-    #     request.data._mutable = True
-    #     dc_id = request.data.pop('dog_creator')
-    #     dog_creator = Dog.objects.get(pk=dc_id)
-    #     do_id = request.data.pop('dog_other') 
-    #     dog_other = Dog.objects.get(pk=do_id)
-
-    #     if dog_creator and dog_other:
-    #         c = Conversation.objects.create(dog_creator=dog_creator, dog_other=dog_other, **request.data)
-    #         return Response(data=c.id)
-
-    #     return Response(data="failed")
 
 class MessageViewSet(viewsets.ModelViewSet):
     """

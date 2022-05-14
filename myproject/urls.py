@@ -23,6 +23,7 @@ router.register(r'connections', views.ConnectionViewSet)
 router.register(r'conversations', views.ConversationViewSet)
 router.register(r'messages', views.MessageViewSet)
 router.register(r'comments', views.CommentViewSet)
+# router.register(r'specificConnections', views.ConnectionSpecificViewSet)
 
 
 urlpatterns = [
