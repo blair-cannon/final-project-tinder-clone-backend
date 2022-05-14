@@ -72,6 +72,7 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = URLForImage()
     class Meta:
         model = Image
         fields = '__all__'
