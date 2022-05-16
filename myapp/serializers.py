@@ -85,8 +85,9 @@ class DogSerializer(serializers.ModelSerializer):
     socialization = CustomForeignKeyField(queryset=Socialization.objects.all(), serializer=SocializationSerializer)
     aggression = CustomForeignKeyField(queryset=Aggression.objects.all(), serializer=AggressionSerializer)
     favorite_park = CustomForeignKeyField(queryset=Park.objects.all(), serializer=ParkSerializer)
-    tags = TagListingField(queryset=Tag.objects.all(), many=True)
-    # birthday = serializers.DateField(format='YYYY-MM-DD', input_formats='YYYY-MM-DD') %
+    # change tags to many=True once figuring out how to handle tags on the edit of a dog with multiple tags, 
+    # multiple tags works for creation and for reading but had errors when editing a dog profile
+    tags = TagListingField(queryset=Tag.objects.all())
    
     class Meta:
         model = Dog
