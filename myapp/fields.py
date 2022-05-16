@@ -31,23 +31,18 @@ class TagListingField(serializers.RelatedField):
         return value.label
 
     def to_internal_value(self, tag_id):
-        print('self', self)
-        print('type', type(tag_id))
+        print('self1', self)
+        print('type2', type(tag_id))
         if isinstance(tag_id, int):
             tag = Tag.objects.filter(id=tag_id).first()
             if tag:
                 return tag
         elif isinstance(tag_id, str):
-            print('tag', tag_id)
-            print('type', type(tag_id))
-            tag = Tag.objects.filter(label=tag_id).first()
+            print('tag3', tag_id)
+            print('type4', type(tag_id))
+            tag = Tag.objects.filter(id=tag_id).first()
             if tag:
                 return tag.id
-            else:
-                id = int(tag_id)
-                tag = Tag.objects.filter(label=id).first
-                if tag:
-                    return tag
 
         raise serializers.ValidationError(
             "No tag exists with id \"%s\"." % str(tag_id),
