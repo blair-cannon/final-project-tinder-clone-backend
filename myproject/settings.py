@@ -88,7 +88,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io', 'https://mudbuds.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io', 'https://*.herokuapp.com']
 
 
 SITE_ID = 1
