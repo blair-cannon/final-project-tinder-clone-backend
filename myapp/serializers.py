@@ -87,7 +87,7 @@ class DogSerializer(serializers.ModelSerializer):
     favorite_park = CustomForeignKeyField(queryset=Park.objects.all(), serializer=ParkSerializer)
     # change tags to many=True once figuring out how to handle tags on the edit of a dog with multiple tags, 
     # multiple tags works for creation and for reading but had errors when editing a dog profile
-    tags = TagListingField(queryset=Tag.objects.all(), many=True)
+    # tags = TagListingField(queryset=Tag.objects.all(), many=True)
    
     class Meta:
         model = Dog
